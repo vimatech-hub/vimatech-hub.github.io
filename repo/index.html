@@ -1,4 +1,45 @@
-<h1>Contenuto della cartella IPTV</h1>
-<ul>
-  <li><a href="iptv/ita.m3u">ita.m3u</a></li>
-</ul>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Contenuto della cartella /repo</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { color: #333; }
+        ul { line-height: 1.8; }
+    </style>
+</head>
+<body>
+
+<h1>Contenuto della cartella /repo</h1>
+<ul id="file-list">Caricamento...</ul>
+
+<script>
+// URL API GitHub per leggere la cartella /repo
+const apiUrl = "https://api.github.com/repos/vimatech-hub/vimatech-hub.github.io/contents/repo";
+
+fetch(apiUrl)
+    .then(response => response.json())
+    .then(files => {
+        const list = document.getElementById("file-list");
+        list.innerHTML = "";
+
+        files.forEach(file => {
+            const li = document.createElement("li");
+            const link = document.createElement("a");
+
+            link.href = file.path.replace("repo", "https://vimatech-hub.github.io/repo");
+            link.textContent = file.name;
+
+            li.appendChild(link);
+            list.appendChild(li);
+        });
+    })
+    .catch(error => {
+        document.getElementById("file-list").innerHTML = "Errore nel caricamento.";
+        console.error(error);
+    });
+</script>
+
+</body>
+</html>
